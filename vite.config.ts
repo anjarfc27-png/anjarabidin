@@ -26,4 +26,14 @@ export default defineConfig(({ mode }) => ({
       '@radix-ui/react-slot'
     ],
   },
+  build: {
+    rollupOptions: {
+      external: [
+        '@capacitor-community/barcode-scanner',
+        '@capgo/capacitor-flash',
+        '@capacitor/status-bar',
+        '@capacitor/network'
+      ]
+    }
+  }
 }));
