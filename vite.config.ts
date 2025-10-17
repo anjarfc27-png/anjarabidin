@@ -28,12 +28,9 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     rollupOptions: {
-      external: [
-        '@capacitor-community/barcode-scanner',
-        '@capgo/capacitor-flash',
-        '@capacitor/status-bar',
-        '@capacitor/network'
-      ]
+      output: {
+        manualChunks: undefined
+      }
     }
   }
 }));

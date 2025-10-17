@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { Capacitor } from "@capacitor/core";
@@ -50,7 +50,7 @@ const App = () => {
           <StoreProvider>
             <Toaster />
             <Sonner />
-            <BrowserRouter>
+            <HashRouter>
               <POSProvider>
                 <BluetoothProvider>
                   <Routes>
@@ -106,7 +106,7 @@ const App = () => {
                   <PPOBNavButton />
                 </BluetoothProvider>
               </POSProvider>
-            </BrowserRouter>
+            </HashRouter>
           </StoreProvider>
         </AuthProvider>
       </QueryClientProvider>
