@@ -37,9 +37,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSession(session);
         setUser(session?.user ?? null);
         
-        // Check approval status and role
+        // Check approval status and role in background
         if (session?.user) {
-          setIsAdminCheckComplete(false);
+          setIsAdminCheckComplete(true); // Set complete first for faster render
           setTimeout(() => {
             checkUserApprovalAndRole(session.user.id);
           }, 0);
@@ -58,8 +58,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(session?.user ?? null);
       
       if (session?.user) {
-        setIsAdminCheckComplete(false);
-        checkUserApprovalAndRole(session.user.id);
+        setIsAdminCheckComplete(true); // Set complete first for faster render
+        setTimeout(() => {
+          checkUserApprovalAndRole(session.user.id);
+        }, 0);
       } else {
         setIsAdminCheckComplete(true);
       }

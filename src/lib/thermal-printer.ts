@@ -37,7 +37,11 @@ class ThermalPrinter {
       // Check if Bluetooth is enabled
       const isEnabled = await BleClient.isEnabled();
       if (!isEnabled) {
-        await BleClient.enable();
+        try {
+          await BleClient.enable();
+        } catch (enableError) {
+          throw new Error('Izin Bluetooth ditolak. Buka Pengaturan > Aplikasi > KasirQ > Izin, lalu aktifkan Bluetooth dan Lokasi.');
+        }
       }
       
       // Request device from user with more flexible options

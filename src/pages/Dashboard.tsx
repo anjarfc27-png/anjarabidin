@@ -8,10 +8,8 @@ import { useStore } from '@/contexts/StoreContext';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
-  const { signOut, isAdmin, loading, isAdminCheckComplete } = useAuth();
+  const { signOut, isAdmin } = useAuth();
   const { currentStore } = useStore();
-
-  // No auto redirect - show dashboard for all users
 
   const handleLogout = async () => {
     try {
@@ -20,20 +18,6 @@ export const Dashboard = () => {
       console.error('Logout error:', error);
     }
   };
-
-  // Show loading while checking admin status
-  if (loading || !isAdminCheckComplete) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p>Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // All approved users can see dashboard
 
   return (
     <div className="min-h-screen w-full bg-background flex items-center justify-center p-4">

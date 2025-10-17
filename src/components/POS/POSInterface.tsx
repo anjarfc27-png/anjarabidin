@@ -606,7 +606,7 @@ Profit: ${formatPrice(receipt.profit)}
   };
 
   return (
-    <div className="min-h-screen w-full bg-background pt-[calc(env(safe-area-inset-top)+56px)]">
+    <div className="min-h-screen w-full bg-background pt-[calc(env(safe-area-inset-top)+60px)]">
       {/* Header - Fixed with safe area padding for status bar */}
       <header className="fixed top-0 z-50 border-b bg-card shadow-sm w-full safe-top">
         <div className="w-full px-2 sm:px-4 py-2 sm:py-3">
@@ -714,7 +714,7 @@ Profit: ${formatPrice(receipt.profit)}
       </header>
 
       {/* Dashboard Stats with top padding for fixed header and status bar */}
-      <div className="w-full px-2 sm:px-4 py-2 sm:py-4">
+      <div className="w-full px-2 sm:px-4 pt-1">
         <div className="grid grid-cols-1 gap-2 sm:gap-4 mb-4 sm:mb-6">
           {/* Full width card on top */}
           <Card className="pos-card cursor-pointer hover:shadow-lg transition-shadow" onClick={() => handleDashboardClick('revenue')}>

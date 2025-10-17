@@ -26,6 +26,17 @@ const config: CapacitorConfig = {
     CapacitorHttp: {
       enabled: true
     },
+    BluetoothLe: {
+      displayStrings: {
+        scanning: "Mencari printer thermal...",
+        cancel: "Batal",
+        availableDevices: "Perangkat yang tersedia",
+        noDeviceFound: "Tidak ada printer ditemukan"
+      }
+    },
+    CapacitorFlash: {
+      enabled: true
+    },
     SplashScreen: {
       launchShowDuration: 2000,
       backgroundColor: "#3b82f6",

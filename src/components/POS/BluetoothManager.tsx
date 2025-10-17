@@ -42,6 +42,8 @@ export const BluetoothManager = () => {
         toast.error('Web Bluetooth tidak didukung. Gunakan Chrome versi 56+ di Android dan aktifkan flag experimental jika perlu.');
       } else if (error.message?.includes('characteristic')) {
         toast.error('Printer tidak kompatibel. Coba printer lain atau restart printer dan HP.');
+      } else if (error.message?.includes('Permission') || error.message?.includes('Izin') || error.message?.includes('permission')) {
+        toast.error('Izin Bluetooth ditolak. Buka Pengaturan > Aplikasi > KasirQ > Izin, lalu aktifkan Bluetooth dan Lokasi.');
       } else {
         toast.error(`Gagal terhubung: ${error.message}. Coba restart Chrome dan printer.`);
       }

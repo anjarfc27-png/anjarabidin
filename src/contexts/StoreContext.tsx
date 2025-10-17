@@ -42,9 +42,10 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       if (error) throw error;
       setStores(data || []);
       
-      // Set first store as current if none selected
+      // Set first store as current if none selected and set loading false immediately
       if (!currentStore && data && data.length > 0) {
         setCurrentStore(data[0]);
+        setLoading(false);
       }
     } catch (error) {
       console.error('Error loading stores:', error);
