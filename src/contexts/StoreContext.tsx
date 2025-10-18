@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { Store, StoreCategory } from '@/types/store';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 interface StoreContextType {
   stores: Store[];
@@ -19,11 +19,14 @@ const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useAuth();
-  const { toast } = useToast();
   const [stores, setStores] = useState<Store[]>([]);
   const [currentStore, setCurrentStore] = useState<Store | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const notify = ({ title, description, variant }: { title: string; description?: string; variant?: 'destructive' }) => {
+    if (variant === 'destructive') toast.error(description || title);
+    else toast.success(description || title);
+  };
   const loadStores = async () => {
     if (!user) {
       setStores([]);
@@ -49,7 +52,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (error) {
       console.error('Error loading stores:', error);
-      toast({
+      notify({
         title: 'Error',
         description: 'Gagal memuat data toko',
         variant: 'destructive',
@@ -77,7 +80,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       if (error) throw error;
 
       setStores(prev => [...prev, data]);
-      toast({
+      notify({
         title: 'Sukses',
         description: 'Toko berhasil dibuat',
       });
@@ -85,7 +88,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       return data;
     } catch (error) {
       console.error('Error creating store:', error);
-      toast({
+      notify({
         title: 'Error',
         description: 'Gagal membuat toko',
         variant: 'destructive',
@@ -111,7 +114,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         setCurrentStore(prev => prev ? { ...prev, ...updates } : null);
       }
 
-      toast({
+      notify({
         title: 'Sukses',
         description: 'Data toko berhasil diperbarui',
       });
@@ -119,7 +122,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       return true;
     } catch (error) {
       console.error('Error updating store:', error);
-      toast({
+      notify({
         title: 'Error',
         description: 'Gagal memperbarui data toko',
         variant: 'destructive',
@@ -144,7 +147,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
         setCurrentStore(remainingStores.length > 0 ? remainingStores[0] : null);
       }
 
-      toast({
+      notify({
         title: 'Sukses',
         description: 'Toko berhasil dihapus',
       });
@@ -152,7 +155,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
       return true;
     } catch (error) {
       console.error('Error deleting store:', error);
-      toast({
+      notify({
         title: 'Error',
         description: 'Gagal menghapus toko',
         variant: 'destructive',
