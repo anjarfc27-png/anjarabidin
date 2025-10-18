@@ -64,7 +64,7 @@ export const POSInterface = () => {
     formatPrice,
   } = usePOSContext();
 
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
   const { currentStore } = useStore();
   const [lastReceipt, setLastReceipt] = useState<ReceiptType | null>(null);
   const [selectedReceipt, setSelectedReceipt] = useState<ReceiptType | null>(null);
@@ -606,9 +606,9 @@ Profit: ${formatPrice(receipt.profit)}
   };
 
   return (
-    <div className="min-h-screen w-full bg-background pt-[calc(env(safe-area-inset-top)+60px)]">
+    <div className="min-h-screen w-full bg-background pt-[calc(env(safe-area-inset-top)+56px)]">
       {/* Header - Fixed with safe area padding for status bar */}
-      <header className="fixed top-0 z-50 border-b bg-card shadow-sm w-full safe-top">
+      <header className="fixed top-0 z-50 border-b bg-card shadow-sm w-full safe-top h-14">
         <div className="w-full px-2 sm:px-4 py-2 sm:py-3">
           <div className="flex items-center justify-between">
             <div 
@@ -617,28 +617,17 @@ Profit: ${formatPrice(receipt.profit)}
             >
               <Store className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
               <div>
-                <div className="hidden sm:block">
-                  <h1 className="text-lg sm:text-2xl font-bold">
-                    Kasir POS Multi Toko
-                  </h1>
-                  {currentStore?.address && (
-                    <p className="text-xs sm:text-sm text-muted-foreground">
-                      {currentStore.address}
-                    </p>
-                  )}
-                  <p className="text-xs sm:text-sm text-primary font-medium">
-                    {getWelcomeMessage()}, {currentStore?.cashier_name || 'Admin Kasir'}
+                <h1 className="text-sm sm:text-xl font-bold">
+                  {currentStore?.name || 'Kasir POS'}
+                </h1>
+                {currentStore?.address && (
+                  <p className="text-xs text-muted-foreground hidden sm:block">
+                    {currentStore.address}
                   </p>
-                </div>
-                {/* Mobile compact header */}
-                <div className="sm:hidden">
-                  <h1 className="text-sm font-bold">
-                    {currentStore?.name || 'Toko'}
-                  </h1>
-                  <p className="text-xs text-primary">
-                    {getWelcomeMessage()}
-                  </p>
-                </div>
+                )}
+                <p className="text-xs sm:text-sm text-primary font-medium">
+                  {getWelcomeMessage()}, {currentStore?.cashier_name || user?.email?.split('@')[0] || 'Kasir'}
+                </p>
               </div>
             </div>
             
@@ -702,7 +691,7 @@ Profit: ${formatPrice(receipt.profit)}
                   <span>Logout</span>
                 </Button>
                 <div className="text-right text-xs sm:text-sm">
-                  <div className="font-semibold">Admin Kasir</div>
+                  <div className="font-semibold">{currentStore?.cashier_name || user?.email?.split('@')[0] || 'Kasir'}</div>
                   <div className="text-muted-foreground">
                     {new Date().toLocaleDateString('id-ID')}
                   </div>
@@ -714,7 +703,7 @@ Profit: ${formatPrice(receipt.profit)}
       </header>
 
       {/* Dashboard Stats with top padding for fixed header and status bar */}
-      <div className="w-full px-2 sm:px-4 pt-1">
+      <div className="w-full px-2 sm:px-4 pt-2">
         <div className="grid grid-cols-1 gap-2 sm:gap-4 mb-4 sm:mb-6">
           {/* Full width card on top */}
           <Card className="pos-card cursor-pointer hover:shadow-lg transition-shadow" onClick={() => handleDashboardClick('revenue')}>
